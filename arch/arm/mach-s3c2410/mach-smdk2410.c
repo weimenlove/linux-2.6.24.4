@@ -53,6 +53,9 @@
 #include <asm/plat-s3c24xx/cpu.h>
 
 #include <asm/plat-s3c24xx/common-smdk.h>
+#include <asm/arch-s3c2410/fb.h>
+#include <linux/platform_device.h>
+
 
 static struct map_desc smdk2410_iodesc[] __initdata = {
   /* nothing here yet */
@@ -86,6 +89,43 @@ static struct s3c2410_uartcfg smdk2410_uartcfgs[] __initdata = {
 	}
 };
 
+static struct s3c2410fb_display smdk2410_lcd_cfg __initdata = {
+	.lcdcon5 = S3C2410_LCDCON5_FRM565 |
+		S3C2410_LCDCON5_INVVLINE |
+		S3C2410_LCDCON5_INVVFRAME |
+		S3C2410_LCDCON5_PWREN |
+		S3C2410_LCDCON5_HWSWP,
+	.type  = S3C2410_LCDCON1_TFT,
+	.width = 640,
+	.height = 480,
+	.pixclock = 39721,
+	.xres = 640,
+	.yres = 480,
+	.bpp = 16,
+	.left_margin = 40,
+	.right_margin = 32,
+	.hsync_len = 32,
+	.vsync_len = 2,
+	.upper_margin = 35,
+	.lower_margin = 5,
+};
+
+static struct s3c2410fb_mach_info smdk2410_fb_info __initdata =
+{
+	.displays = &smdk2410_lcd_cfg,
+	.num_displays = 1,
+	.default_display = 0,
+	.gpccon = 0xaaaaaaaa,
+	.gpccon_mask = 0x0,
+	.gpcup = 0xffffffff,
+	.gpcup_mask = 0x0,
+	.gpdcon = 0xaaaaaaaa,
+	.gpdcon_mask = 0x0,
+	.gpdup = 0xffffffff,
+	.gpdup_mask = 0x0,
+	.lpcsel = 0,
+};
+
 static struct platform_device *smdk2410_devices[] __initdata = {
 	&s3c_device_usb,
 	&s3c_device_lcd,
@@ -103,6 +143,7 @@ static void __init smdk2410_map_io(void)
 
 static void __init smdk2410_init(void)
 {
+	s3c24xx_fb_set_platdata(&smdk2410_fb_info);
 	platform_add_devices(smdk2410_devices, ARRAY_SIZE(smdk2410_devices));
 	smdk_machine_init();
 }
