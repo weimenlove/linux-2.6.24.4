@@ -595,6 +595,28 @@ struct platform_device s3c_device_timer3 = {
 
 EXPORT_SYMBOL(s3c_device_timer3);
 
+static struct resource s3c_dm9000_resource[] = {
+	[0] = {
+		.start = 0x10000000,
+		.end = 0x10000040,
+		.flags = IORESOURCE_MEM,
+	},
+	[1] = {
+		.start = IRQ_EINT2,
+		.end = IRQ_EINT2,
+		.flags = IORESOURCE_IRQ,
+	},
+};
+
+struct platform_device s3c_device_dm9000 = {
+	.name = "s3c2410-dm9000",
+	.id = -1,
+	.num_resources = ARRAY_SIZE(s3c_dm9000_resource),
+	.resource = s3c_dm9000_resource,
+};
+
+EXPORT_SYMBOL(s3c_device_dm9000);
+
 #ifdef CONFIG_CPU_S3C2440
 
 /* Camif Controller */
