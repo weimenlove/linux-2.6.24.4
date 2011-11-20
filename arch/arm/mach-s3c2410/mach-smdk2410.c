@@ -54,8 +54,7 @@
 
 #include <asm/plat-s3c24xx/common-smdk.h>
 #include <asm/arch-s3c2410/fb.h>
-#include <linux/platform_device.h>
-
+#include <asm/arch/ts.h>
 
 static struct map_desc smdk2410_iodesc[] __initdata = {
   /* nothing here yet */
@@ -126,12 +125,19 @@ static struct s3c2410fb_mach_info smdk2410_fb_info __initdata =
 	.lpcsel = 0,
 };
 
+struct s3c2410_ts_mach_info s3c2410_ts_cfg __initdata = {
+	.delay =20000,
+	.presc = 55,
+	.oversampling_shift = 2,
+};
+
 static struct platform_device *smdk2410_devices[] __initdata = {
 	&s3c_device_usb,
 	&s3c_device_lcd,
 	&s3c_device_wdt,
 	&s3c_device_i2c,
 	&s3c_device_iis,
+	&s3c_device_ts,
 	&s3c_device_dm9000,
 };
 
@@ -145,6 +151,7 @@ static void __init smdk2410_map_io(void)
 static void __init smdk2410_init(void)
 {
 	s3c24xx_fb_set_platdata(&smdk2410_fb_info);
+	set_s3c2410ts_info(&s3c2410_ts_cfg);
 	platform_add_devices(smdk2410_devices, ARRAY_SIZE(smdk2410_devices));
 	smdk_machine_init();
 }

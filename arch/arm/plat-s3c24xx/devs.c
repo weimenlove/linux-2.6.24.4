@@ -617,6 +617,25 @@ struct platform_device s3c_device_dm9000 = {
 
 EXPORT_SYMBOL(s3c_device_dm9000);
 
+/* touchscreen  */
+#include <asm/arch/ts.h>
+static struct s3c2410_ts_mach_info s3c2410ts_info;
+
+void __init set_s3c2410ts_info(struct s3c2410_ts_mach_info *hard_s3c2410ts_info)
+{
+	memcpy(&s3c2410ts_info,hard_s3c2410ts_info,sizeof(struct s3c2410_ts_mach_info));
+}
+
+struct platform_device s3c_device_ts = {
+	.name 	= "s3c2410-ts",
+	.id   	= -1,
+	.dev 	= {
+			.platform_data = &s3c2410ts_info,
+	}
+};
+
+EXPORT_SYMBOL(s3c_device_ts);
+
 #ifdef CONFIG_CPU_S3C2440
 
 /* Camif Controller */
