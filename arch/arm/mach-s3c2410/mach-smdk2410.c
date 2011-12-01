@@ -89,24 +89,27 @@ static struct s3c2410_uartcfg smdk2410_uartcfgs[] __initdata = {
 };
 
 static struct s3c2410fb_display smdk2410_lcd_cfg __initdata = {
+	/* Configuration for 640x480 SHARP LQ080V3DG01 */
 	.lcdcon5 = S3C2410_LCDCON5_FRM565 |
 		S3C2410_LCDCON5_INVVLINE |
 		S3C2410_LCDCON5_INVVFRAME |
 		S3C2410_LCDCON5_PWREN |
 		S3C2410_LCDCON5_HWSWP,
+
 	.type  = S3C2410_LCDCON1_TFT,
 	.width = 640,
 	.height = 480,
-	.pixclock = 39721,
+
+	.pixclock = 40000,
 	.xres = 640,
 	.yres = 480,
 	.bpp = 16,
-	.left_margin = 40,
-	.right_margin = 32,
-	.hsync_len = 32,
-	.vsync_len = 2,
-	.upper_margin = 35,
-	.lower_margin = 5,
+	.left_margin = 44,
+	.right_margin = 116,
+	.hsync_len = 96,
+	.upper_margin = 19,
+	.lower_margin = 11,
+	.vsync_len = 15,
 };
 
 static struct s3c2410fb_mach_info smdk2410_fb_info __initdata =
