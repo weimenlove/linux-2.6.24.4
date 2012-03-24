@@ -752,6 +752,12 @@ config JS_RTC
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called js-rtc.
+config PWM
+	tristate "Servo driver based on PWM"
+	depends on ARCH_S3C2410
+	default y
+	---help---
+	  S3C2410 PWM driver of servo
 
 config SGI_DS1286
 	tristate "SGI DS1286 RTC support"
